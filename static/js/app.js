@@ -1,33 +1,59 @@
 let recorder;
 let audio;
+let selectedTopic;
 
 document.addEventListener('DOMContentLoaded', () => {
     const generateTopicBtn = document.getElementById('generate-topic');
     const startRecordingBtn = document.getElementById('start-recording');
     const stopRecordingBtn = document.getElementById('stop-recording');
-    const topicElement = document.getElementById('topic');
+    const topicsElement = document.getElementById('topics');
+    const recordingContainer = document.getElementById('recording-container');
     const transcriptionElement = document.getElementById('transcription');
     const scoreElement = document.getElementById('score');
     const improvementsElement = document.getElementById('improvements');
     const resultsContainer = document.getElementById('results-container');
 
-    generateTopicBtn.addEventListener('click', generateTopic);
+    generateTopicBtn.addEventListener('click', generateTopics);
     startRecordingBtn.addEventListener('click', startRecording);
     stopRecordingBtn.addEventListener('click', stopRecording);
 
-    generateTopic();
+    generateTopics();
 
-    function generateTopic() {
+    function generateTopics() {
         fetch('/generate_topic')
             .then(response => response.json())
             .then(data => {
-                console.log('Generated topic:', data.topic);
-                topicElement.textContent = data.topic;
+                console.log('Generated topics:', data.topics);
+                topicsElement.innerHTML = '';
+                data.topics.forEach((topic, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = topic;
+                    button.classList.add('topic-button');
+                    button.addEventListener('click', () => selectTopic(topic));
+                    topicsElement.appendChild(button);
+                });
+                recordingContainer.style.display = 'none';
+                selectedTopic = null;
             })
-            .catch(error => console.error('Error generating topic:', error));
+            .catch(error => console.error('Error generating topics:', error));
+    }
+
+    function selectTopic(topic) {
+        selectedTopic = topic;
+        document.querySelectorAll('.topic-button').forEach(btn => {
+            btn.classList.remove('selected');
+            if (btn.textContent === topic) {
+                btn.classList.add('selected');
+            }
+        });
+        recordingContainer.style.display = 'block';
     }
 
     function startRecording() {
+        if (!selectedTopic) {
+            alert('Please select a topic before recording.');
+            return;
+        }
         console.log('Starting recording...');
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(stream => {
@@ -58,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Sending audio for evaluation...');
         const formData = new FormData();
         formData.append('audio', audioBlob, 'speech.webm');
+        formData.append('topic', selectedTopic);
 
         fetch('/evaluate_speech', {
             method: 'POST',

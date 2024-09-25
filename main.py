@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from utils.topic_generator import generate_topic
+from utils.topic_generator import generate_topics
 from utils.speech_evaluator import transcribe_speech, evaluate_speech
 import speech_recognition as sr
 import logging
@@ -14,9 +14,9 @@ def index():
     return render_template('index.html')
 
 @app.route('/generate_topic', methods=['GET'])
-def get_topic():
-    topic = generate_topic()
-    return jsonify({'topic': topic})
+def get_topics():
+    topics = generate_topics()
+    return jsonify({'topics': topics})
 
 @app.route('/evaluate_speech', methods=['POST'])
 def evaluate():

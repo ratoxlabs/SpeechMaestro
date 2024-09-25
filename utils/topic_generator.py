@@ -13,5 +13,5 @@ topics = [
     "The impact of globalization on local cultures"
 ]
 
-def generate_topic():
-    return random.choice(topics)
+def generate_topics():
+    return random.sample(topics, 2)

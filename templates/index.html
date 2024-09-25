@@ -11,11 +11,11 @@
         <h1>Speech Maestro</h1>
         <p class="tagline">Elevate your public speaking skills</p>
         <div id="topic-container">
-            <h2>Your Topic:</h2>
-            <p id="topic"></p>
-            <button id="generate-topic">Generate New Topic</button>
+            <h2>Choose Your Topic:</h2>
+            <div id="topics"></div>
+            <button id="generate-topic">Generate New Topics</button>
         </div>
-        <div id="recording-container">
+        <div id="recording-container" style="display: none;">
             <img src="{{ url_for('static', filename='images/microphone.svg') }}" alt="Microphone" id="mic-icon">
             <button id="start-recording">Start Recording</button>
             <button id="stop-recording" disabled>Stop Recording</button>
