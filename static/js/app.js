@@ -68,11 +68,15 @@ document.addEventListener('DOMContentLoaded', () => {
         transcriptionElement.textContent = data.transcription;
         scoreElement.textContent = `${data.score}/10`;
         improvementsElement.innerHTML = '';
-        data.improvements.forEach(improvement => {
-            const li = document.createElement('li');
-            li.textContent = improvement;
-            improvementsElement.appendChild(li);
-        });
+        if (data.improvements && Array.isArray(data.improvements)) {
+            data.improvements.forEach(improvement => {
+                const li = document.createElement('li');
+                li.textContent = improvement;
+                improvementsElement.appendChild(li);
+            });
+        } else {
+            improvementsElement.innerHTML = '<li>No specific improvements suggested.</li>';
+        }
         resultsContainer.style.display = 'block';
     }
 });
