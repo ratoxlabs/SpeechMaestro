@@ -10,6 +10,7 @@ python = "^3.11"
 flask = "^3.0.3"
 nltk = "^3.9.1"
 speechrecognition = "^3.10.4"
+pydub = "^0.25.1"
 
 
 [build-system]

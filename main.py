@@ -3,6 +3,8 @@ from utils.topic_generator import generate_topic
 from utils.speech_evaluator import transcribe_speech, evaluate_speech
 import speech_recognition as sr
 import logging
+from pydub import AudioSegment
+import io
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
@@ -27,9 +29,15 @@ def evaluate():
 
     try:
         app.logger.info("Processing audio file")
-        with sr.AudioFile(audio_file) as source:
+        # Convert the incoming audio to WAV format
+        audio = AudioSegment.from_file(audio_file, format="webm")
+        wav_data = io.BytesIO()
+        audio.export(wav_data, format="wav")
+        wav_data.seek(0)
+
+        with sr.AudioFile(wav_data) as source:
             audio_data = recognizer.record(source)
-        
+
         app.logger.info("Transcribing speech")
         transcription = transcribe_speech(audio_data)
         app.logger.info(f"Transcription result: {transcription}")
