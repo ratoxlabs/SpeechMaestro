@@ -4,8 +4,10 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 import string
 
+# Download required NLTK resources
 nltk.download('punkt', quiet=True)
 nltk.download('stopwords', quiet=True)
+nltk.download('punkt_tab', quiet=True)
 
 def transcribe_speech(audio_data):
     recognizer = sr.Recognizer()
