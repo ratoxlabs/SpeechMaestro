@@ -1,39 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background: linear-gradient(135deg, #8a2be2, #4169e1);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
     width: 80%;
+    max-width: 600px;
     margin: auto;
-    overflow: hidden;
-    padding: 20px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 h1 {
-    color: #333;
+    color: #fff;
     text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 10px;
 }
 
 h2 {
-    color: #444;
+    color: #f0f0f0;
+    font-size: 1.5em;
+}
+
+.tagline {
+    color: #e0e0e0;
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 30px;
 }
 
 button {
-    display: inline-block;
-    background: #333;
+    display: block;
+    width: 100%;
+    background: linear-gradient(45deg, #8a2be2, #4169e1);
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border: none;
+    border-radius: 50px;
     cursor: pointer;
-    margin-top: 10px;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    margin-top: 20px;
 }
 
 button:hover {
-    background: #555;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 button:disabled {
@@ -46,22 +72,31 @@ button:disabled {
     height: 50px;
     display: block;
     margin: 20px auto;
+    filter: invert(1);
 }
 
 #topic-container, #recording-container, #results-container {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.1);
     padding: 20px;
     margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
 }
 
 #transcription, #score {
-    background: #e9e9e9;
-    padding: 10px;
-    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    color: #fff;
 }
 
 #improvements li {
     margin-bottom: 10px;
+    color: #f0f0f0;
+}
+
+#topic {
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 20px;
 }
