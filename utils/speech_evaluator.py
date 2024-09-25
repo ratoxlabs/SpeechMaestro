@@ -10,6 +10,7 @@ import re
 nltk.download('punkt', quiet=True)
 nltk.download('stopwords', quiet=True)
 nltk.download('averaged_perceptron_tagger', quiet=True)
+nltk.download('punkt_tab', quiet=True)
 
 def transcribe_speech(audio_data):
     recognizer = sr.Recognizer()
@@ -113,4 +114,3 @@ def generate_improvements(clarity_score, content_score, language_score, purpose_
     if audience_score < 0.6:
         improvements.append("Adjust your language complexity to better suit your target audience.")
     return improvements
-
