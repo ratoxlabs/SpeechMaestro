@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oratory Practice App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Oratory Practice App</h1>
+        <div id="topic-container">
+            <h2>Your Topic:</h2>
+            <p id="topic"></p>
+            <button id="generate-topic">Generate New Topic</button>
+        </div>
+        <div id="recording-container">
+            <img src="{{ url_for('static', filename='images/microphone.svg') }}" alt="Microphone" id="mic-icon">
+            <button id="start-recording">Start Recording</button>
+            <button id="stop-recording" disabled>Stop Recording</button>
+        </div>
+        <div id="results-container" style="display: none;">
+            <h2>Your Speech Transcription:</h2>
+            <p id="transcription"></p>
+            <h2>Your Score:</h2>
+            <p id="score"></p>
+            <h2>Areas for Improvement:</h2>
+            <ul id="improvements"></ul>
+        </div>
+    </div>
+    <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
