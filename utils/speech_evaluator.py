@@ -4,19 +4,24 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 import string
 
-nltk.download('punkt')
-nltk.download('stopwords')
+nltk.download('punkt', quiet=True)
+nltk.download('stopwords', quiet=True)
 
 def transcribe_speech(audio_data):
     recognizer = sr.Recognizer()
     try:
-        return recognizer.recognize_google(audio_data)
+        transcription = recognizer.recognize_google(audio_data)
+        print(f"Transcription: {transcription}")  # Added print statement
+        return transcription
     except sr.UnknownValueError:
+        print("Speech recognition could not understand the audio")  # Added print statement
         return "Speech recognition could not understand the audio"
-    except sr.RequestError:
+    except sr.RequestError as e:
+        print(f"Could not request results from the speech recognition service; {e}")  # Added print statement
         return "Could not request results from the speech recognition service"
 
 def evaluate_speech(transcription):
+    print(f"Evaluating speech: {transcription}")  # Added print statement
     words = word_tokenize(transcription.lower())
     sentences = sent_tokenize(transcription)
     stop_words = set(stopwords.words('english'))
@@ -52,4 +57,5 @@ def evaluate_speech(transcription):
     if delivery_score < 0.8:
         improvements.append("Work on your delivery, including pace and clarity of speech.")
     
+    print(f"Evaluation results - Score: {normalized_score}, Improvements: {improvements}")  # Added print statement
     return normalized_score, improvements
