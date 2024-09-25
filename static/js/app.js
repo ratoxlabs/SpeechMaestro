@@ -1,6 +1,8 @@
 let recorder;
 let audio;
 let selectedTopic;
+let recordingAnimation;
+let processingAnimation;
 
 document.addEventListener('DOMContentLoaded', () => {
     const generateTopicBtn = document.getElementById('generate-topic');
@@ -8,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stopRecordingBtn = document.getElementById('stop-recording');
     const topicsElement = document.getElementById('topics');
     const recordingContainer = document.getElementById('recording-container');
+    const processingContainer = document.getElementById('processing-container');
     const transcriptionElement = document.getElementById('transcription');
     const scoreElement = document.getElementById('score');
     const improvementsElement = document.getElementById('improvements');
@@ -16,6 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
     generateTopicBtn.addEventListener('click', generateTopics);
     startRecordingBtn.addEventListener('click', startRecording);
     stopRecordingBtn.addEventListener('click', stopRecording);
+
+    // Load Lottie animations
+    recordingAnimation = lottie.loadAnimation({
+        container: document.getElementById('recording-animation'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: false,
+        path: 'https://assets2.lottiefiles.com/packages/lf20_jJ7Djn.json' // Microphone animation
+    });
+
+    processingAnimation = lottie.loadAnimation({
+        container: document.getElementById('processing-animation'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: false,
+        path: 'https://assets5.lottiefiles.com/packages/lf20_kxsd2ytq.json' // Loading animation
+    });
 
     generateTopics();
 
@@ -64,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 recorder.startRecording();
                 startRecordingBtn.disabled = true;
                 stopRecordingBtn.disabled = false;
+                recordingAnimation.play();
                 console.log('Recording started');
             })
             .catch(error => console.error('Error accessing microphone:', error));
@@ -76,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sendAudioForEvaluation(audio);
             startRecordingBtn.disabled = false;
             stopRecordingBtn.disabled = true;
+            recordingAnimation.stop();
             console.log('Recording stopped');
         });
     }
@@ -85,6 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData();
         formData.append('audio', audioBlob, 'speech.webm');
         formData.append('topic', selectedTopic);
+
+        recordingContainer.style.display = 'none';
+        processingContainer.style.display = 'block';
+        processingAnimation.play();
 
         fetch('/evaluate_speech', {
             method: 'POST',
@@ -98,10 +124,14 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             console.log('Received evaluation data:', data);
+            processingAnimation.stop();
+            processingContainer.style.display = 'none';
             displayResults(data);
         })
         .catch(error => {
             console.error('Error during evaluation:', error);
+            processingAnimation.stop();
+            processingContainer.style.display = 'none';
             alert('An error occurred during speech evaluation. Please try again.');
         });
     }

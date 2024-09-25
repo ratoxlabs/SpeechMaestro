@@ -67,15 +67,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
-#mic-icon {
-    width: 50px;
-    height: 50px;
-    display: block;
-    margin: 20px auto;
-    filter: invert(1);
-}
-
-#topic-container, #recording-container, #results-container {
+#topic-container, #recording-container, #processing-container, #results-container {
     background: rgba(255, 255, 255, 0.1);
     padding: 20px;
     margin-bottom: 20px;
@@ -95,8 +87,29 @@ button:disabled {
     color: #f0f0f0;
 }
 
-#topic {
+.topic-button {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.topic-button:hover, .topic-button.selected {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+#recording-animation, #processing-animation {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+}
+
+#processing-container p {
+    text-align: center;
     color: #fff;
     font-size: 1.2em;
-    margin-bottom: 20px;
 }
